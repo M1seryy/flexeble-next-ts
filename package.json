@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -20,10 +20,12 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@grafbase/sdk": "^0.0.25",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "grafbase": "^0.99.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.3.2",
     "typescript": "^5"
