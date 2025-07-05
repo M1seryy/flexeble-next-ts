@@ -12,8 +12,8 @@ const jwt = auth.JWT({
 
 
 
-  issuer: 'grafbas1e',
-  secret: g.env('JWT_SECRET')
+  issuer: 'grafbase',
+  secret: g.env('JWT_SECREdfeT')
 })
 
 export default config({
