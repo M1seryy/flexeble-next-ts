@@ -9,7 +9,10 @@ const User = g.model('User', {
 
 // Налаштовуємо JWT аутентифікацію (секрет береться із змінної середовища)
 const jwt = auth.JWT({
-  issuer: 'grafbase',
+
+
+
+  issuer: 'grafbas1e',
   secret: g.env('JWT_SECRET')
 })
 
