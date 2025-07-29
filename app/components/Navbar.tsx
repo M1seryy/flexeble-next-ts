@@ -1,34 +1,51 @@
+// app/components/Navbar.tsx
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { NavLinks } from "../constants";
 import AuthProvider from "./AuthProvider";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/lib/session";
+import { SessionInterface } from "@/common.types";
+import SignOutButton from "./SignOutButton";
 
-const Navbar = () => {
-  const session = {};
+const Navbar = async () => {
+  const session = (await getServerSession(authOptions)) as SessionInterface;
+
   return (
     <nav className="flexBetween navbar">
-      <div className="flex-1 flexStart gap-10">
+      <div className="flexStart gap-10">
         <Link href="/">
           <Image src="/logo.svg" width={116} height={43} alt="logo" />
         </Link>
+
         <ul className="xl:flex hidden text-small gap-7">
           {NavLinks.map((link) => (
-            <Link href={link.href} key={link.text}>
-              {link.text}
-            </Link>
+            <li key={link.text}>
+              <Link href={link.href}>{link.text}</Link>
+            </li>
           ))}
         </ul>
-        <div className="flexCenter gap-4">
-          {session ? (
-            <>
-              User Photo
-              <Link href={"/create-project"}>Share work</Link>
-            </>
-          ) : (
-            <AuthProvider />
-          )}
-        </div>
+      </div>
+
+      <div className="flexCenter gap-4">
+        {session?.user ? (
+          <>
+            {session?.user?.image && (
+              <Image
+                src={session.user.image}
+                width={40}
+                height={40}
+                className="rounded-full"
+                alt={session.user.name}
+              />
+            )}
+            <Link href={"/create-project"}>Share work</Link>
+
+            <SignOutButton />
+          </>
+        ) : (
+          <AuthProvider />
+        )}
       </div>
     </nav>
   );
