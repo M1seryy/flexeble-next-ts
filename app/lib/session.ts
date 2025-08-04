@@ -22,22 +22,26 @@ export const authOptions: NextAuthOptions = {
             const email = session?.user?.email as string;
 
             try {
-                const data = await UserModel.findOne({ email }) as UserProfile;
+                await connectDataBase();
+                const data = await UserModel.findOne({ email });
+                if (!data) return session;
 
-                const newSession = {
+                const user = data.toObject();
+                return {
                     ...session,
                     user: {
                         ...session.user,
-                        data,
+                        id: user._id.toString(),
+                        user,
                     },
                 };
-
-                return newSession;
             } catch (error) {
                 console.log("[SESSION CALLBACK ERROR]", error);
                 return session;
             }
         },
+
+
 
         async signIn({ profile }: any) {
             try {

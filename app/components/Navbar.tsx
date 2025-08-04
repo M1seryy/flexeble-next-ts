@@ -7,6 +7,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/lib/session";
 import { SessionInterface } from "@/common.types";
 import SignOutButton from "./SignOutButton";
+import ProfileMenu from "./ProfileMenu";
+import { Button } from "@headlessui/react";
 
 const Navbar = async () => {
   const session = (await getServerSession(authOptions)) as SessionInterface;
@@ -30,18 +32,10 @@ const Navbar = async () => {
       <div className="flexCenter gap-4">
         {session?.user ? (
           <>
-            {session?.user?.image && (
-              <Image
-                src={session.user.image}
-                width={40}
-                height={40}
-                className="rounded-full"
-                alt={session.user.name}
-              />
-            )}
-            <Link href={"/create-project"}>Share work</Link>
-
-            <SignOutButton />
+            <ProfileMenu session={session} />
+            <Link href="/create-project">
+              <button>Share work</button>
+            </Link>
           </>
         ) : (
           <AuthProvider />
